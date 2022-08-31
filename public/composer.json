@@ -1,0 +1,11 @@
+{
+    "name": "juniorlima.dev/allblacks",
+    "type": "project",
+    "description": "Teste de Projeto em PHP - 21 Software",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
