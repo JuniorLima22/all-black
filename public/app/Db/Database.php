@@ -53,4 +53,40 @@ class Database
             die('Error Connect: '. $e->getMessage());
         }
     }
+
+    /**
+     * Método responsavel por executar queries dentro do banco de dados
+     *
+     * @param String $query
+     * @param Array $params
+     * @return PDOStatement
+     **/
+    public function execute($query, $params = [])
+    {
+        try {
+            $statement = $this->connection->prepare($query);
+            $statement->execute($params);
+            return $statement;
+        } catch (PDOException $e) {
+            die('Error Execute: '. $e->getMessage());
+        }
+    }
+
+    /**
+     * Método responsavel por inserir dados no banco de dados
+     *
+     * @param Array $values [field => value]
+     * @return Integer ID inserido
+     **/
+    public function insert($values)
+    {
+        $fields = array_keys($values);
+        $binds = array_pad([], count($fields), '?');
+        
+        $query = 'INSERT INTO '. $this->table. ' ('. implode(',', $fields) .') VALUES ('. implode(',', $binds) .')';
+
+        $this->execute($query, array_values($values));
+        
+        return $this->connection->lastInsertId();
+    }
 }
