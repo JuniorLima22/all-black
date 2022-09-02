@@ -2,6 +2,7 @@
 namespace App\Entity;
 
 use App\Db\Database;
+use PDO;
 
 class Cliente
 {
@@ -70,5 +71,20 @@ class Cliente
         ]);
 
         return true;
+    }
+
+    /**
+     * Método responsavel por listar clientes do banco de dados
+     *
+     * @param String $join  JOIN cláusula
+     * @param String $where WHERE cláusula
+     * @param String $order ORDER cláusula
+     * @param String $limit LIMIT cláusula
+     * @return Array
+     **/
+    public static function getClientes($join = null, $where = null, $order = null, $limit = null)
+    {
+        return (new Database('clientes'))->select($join, $where, $order, $limit)
+                                         ->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 }
