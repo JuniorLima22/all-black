@@ -7,8 +7,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item  <?php if($_SERVER['REQUEST_URI'] == '/') echo 'active' ?>">
             <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'cadastrar')) echo 'active' ?>">
+            <a class="nav-link" href="cadastrar.php">Cadastrar</span></a>
           </li>
         </ul>
       </div>
