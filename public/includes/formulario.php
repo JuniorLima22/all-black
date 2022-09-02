@@ -6,7 +6,7 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" id="nome" class="form-control <?php if ($validate->hasErro('nome', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="" aria-describedby="validationServerNome" placeholder="Nome">
+                    <input type="text" name="nome" id="nome" class="form-control <?php if ($validate->hasErro('nome', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($nome_old)) echo $nome_old; ?>" aria-describedby="validationServerNome" placeholder="Nome">
                     <?php if ($validate->hasErro('nome', $validate->errors())) : ?>
                         <div id="validationServerNome" class="invalid-feedback">
                             <?= $validate->errorMessage('nome', $validate->errors()) ?>
@@ -16,7 +16,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="documento">Documento</label>
-                    <input type="number" name="documento" id="documento" class="form-control <?php if ($validate->hasErro('documento', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerDocumento" placeholder="Documento" step="1">
+                    <input type="number" name="documento" id="documento" class="form-control <?php if ($validate->hasErro('documento', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($documento_old)) echo $documento_old; ?>" aria-describedby="validationServerDocumento" placeholder="Documento" step="1">
                     <?php if ($validate->hasErro('documento', $validate->errors())) : ?>
                         <div id="validationServerDocumento" class="invalid-feedback">
                             <?= $validate->errorMessage('documento', $validate->errors()) ?>
@@ -28,7 +28,7 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="telefone">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" class="form-control <?php if ($validate->hasErro('telefone', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="" aria-describedby="validationServerTelefone" placeholder="Telefone">
+                    <input type="text" name="telefone" id="telefone" class="form-control <?php if ($validate->hasErro('telefone', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($telefone_old)) echo $telefone_old; ?>" aria-describedby="validationServerTelefone" placeholder="Telefone">
                     <?php if ($validate->hasErro('telefone', $validate->errors())) : ?>
                         <div id="validationServerTelefone" class="invalid-feedback">
                             <?= $validate->errorMessage('telefone', $validate->errors()) ?>
@@ -38,7 +38,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control <?php if ($validate->hasErro('email', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerEmail" placeholder="E-mail" step="1">
+                    <input type="email" name="email" id="email" class="form-control <?php if ($validate->hasErro('email', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($email_old)) echo $email_old; ?>" aria-describedby="validationServerEmail" placeholder="E-mail" step="1">
                     <?php if ($validate->hasErro('email', $validate->errors())) : ?>
                         <div id="validationServerEmail" class="invalid-feedback">
                             <?= $validate->errorMessage('email', $validate->errors()) ?>
@@ -50,7 +50,7 @@
             <div class="form-row">
                 <div class="col-md-3 mb-3">
                     <label for="cep">CEP</label>
-                    <input type="number" name="cep" id="cep" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
+                    <input type="number" name="cep" id="cep" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cep_old)) echo $cep_old; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
                     <?php if ($validate->hasErro('cep', $validate->errors())) : ?>
                         <div id="validationServerCep" class="invalid-feedback">
                             <?= $validate->errorMessage('cep', $validate->errors()) ?>
@@ -60,9 +60,10 @@
 
                 <div class="col-md-3 mb-3">
                     <label for="uf">UF</label>
+                    <!-- TODO: Carregar campo_old -->
                     <select name="uf" id="uf" class="custom-select <?php if ($validate->hasErro('uf', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerUf">
                         <option selected value="">Selecione...</option>
-                        <option value="AC">Acre</option>
+                        <option value="AC" <?php if(!empty($uf_old) && $uf_old == 'AC') echo 'selected' ?>>Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapá</option>
                         <option value="AM">Amazonas</option>
@@ -100,7 +101,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="cidade">Cidade</label>
-                    <input type="text" name="cidade" id="cidade" class="form-control <?php if ($validate->hasErro('cidade', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerCidade" placeholder="Cidade">
+                    <input type="text" name="cidade" id="cidade" class="form-control <?php if ($validate->hasErro('cidade', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cidade_old)) echo $cidade_old; ?>" aria-describedby="validationServerCidade" placeholder="Cidade">
                     <?php if ($validate->hasErro('cidade', $validate->errors())) : ?>
                         <div id="validationServerCidade" class="invalid-feedback">
                             <?= $validate->errorMessage('cidade', $validate->errors()) ?>
@@ -112,7 +113,7 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="bairro">Bairro</label>
-                    <input type="text" name="bairro" id="bairro" class="form-control <?php if ($validate->hasErro('bairro', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerBairro" placeholder="Bairro">
+                    <input type="text" name="bairro" id="bairro" class="form-control <?php if ($validate->hasErro('bairro', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($bairro_old)) echo $bairro_old; ?>" aria-describedby="validationServerBairro" placeholder="Bairro">
                     <?php if ($validate->hasErro('bairro', $validate->errors())) : ?>
                         <div id="validationServerBairro" class="invalid-feedback">
                             <?= $validate->errorMessage('bairro', $validate->errors()) ?>
@@ -122,7 +123,7 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="endereco">Endereço</label>
-                    <input type="text" name="endereco" id="endereco" class="form-control <?php if ($validate->hasErro('endereco', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerEndereco" placeholder="Endereço">
+                    <input type="text" name="endereco" id="endereco" class="form-control <?php if ($validate->hasErro('endereco', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($endereco_old)) echo $endereco_old; ?>" aria-describedby="validationServerEndereco" placeholder="Endereço">
                     <?php if ($validate->hasErro('endereco', $validate->errors())) : ?>
                         <div id="validationServerEndereco" class="invalid-feedback">
                             <?= $validate->errorMessage('endereco', $validate->errors()) ?>
@@ -136,8 +137,8 @@
                     <label for="ativo">Ativo</label>
                     <select name="ativo" id="ativo" class="custom-select <?php if ($validate->hasErro('ativo', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerAtivo">
                         <option value="">Selecione...</option>
-                        <option value="SIM" selected>Sim</option>
-                        <option value="NÃO">Não</option>
+                        <option value="SIM" <?php if(!empty($ativo_old) && $ativo_old == 'SIM') echo 'selected' ?>>SIM</option>
+                        <option value="NÃO" <?php if(!empty($ativo_old) && $ativo_old == 'NÃO') echo 'selected' ?>>NÃO</option>
                     </select>
                     <?php if ($validate->hasErro('ativo', $validate->errors())) : ?>
                         <div id="validationServerAtivo" class="invalid-feedback">

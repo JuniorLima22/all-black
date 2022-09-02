@@ -7,14 +7,17 @@ class Validate
     /** @var String $errors Habilita retorno dos erros */
     static $errors = true;
 
-    /** @var String $errorsFields Retorna campos e mensagens de erros */
+    /** @var Array $errorsFields Retorna campos e mensagens de erros */
     public $errorsFields = [];
 
     /** @var String $requestMethod Identifica verbo HTTP Request */
     protected $requestMethod;
 
     /** @var Array $fields Retorna dados dos campos do formulário */
-    public $fields;
+    public $fields = [];
+
+    /** @var Array $oldFields Retorna dados antigos dos campos do formulário */
+    public $oldFields = [];
 
     public function __construct()
     {
@@ -90,6 +93,8 @@ class Validate
         if ($length < $minimus) {
             $this->throwError('O campo ' . $field . ' deve ter pelo menos ' . $minimus . ' caracteres.', 1, $field);
         }
+
+        $this->fields[] = [$field => $this->request()[$field]];
     }
 
     /**
@@ -105,6 +110,8 @@ class Validate
         if ($length > $maximum) {
             $this->throwError('O campo ' . $field . ' deve ter pelo menos ' . $maximum . ' caracteres.', 1, $field);
         }
+
+        $this->fields[] = [$field => $this->request()[$field]];
     }
 
     /**
@@ -121,6 +128,8 @@ class Validate
         if (!in_array($this->request()[$field], $params)) {
             $this->throwError('Valor do campo ' . $field . ' informada não existe.', 1, $field);
         }
+
+        $this->fields[] = [$field => $this->request()[$field]];
     }
 
     /**
@@ -137,6 +146,8 @@ class Validate
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->throwError('Valor do campo ' . $field . ' não é válido.', 1, $field);
         }
+
+        $this->fields[] = [$field => $email];
     }
 
     /**
