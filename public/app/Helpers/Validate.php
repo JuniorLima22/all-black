@@ -12,7 +12,7 @@ class Validate
 
     /** @var String $requestMethod Identifica verbo HTTP Request */
     protected $requestMethod;
-    
+
     /** @var Array $fields Retorna dados dos campos do formulário */
     public $fields;
 
@@ -20,7 +20,7 @@ class Validate
     {
         $this->requestMethod = $_SERVER['REQUEST_METHOD'];
     }
-    
+
     /**
      * Método para validar dados
      *
@@ -31,7 +31,7 @@ class Validate
     {
         foreach ($fields as $field => $types) {
             $field = $this->clearVariable($field);
-            
+
             foreach ($types as $type) {
 
                 $type = explode(':', $type);
@@ -41,11 +41,11 @@ class Validate
                     case 'required':
                         $this->required($field);
                         break;
-                    
+
                     case 'min':
                         $this->min($field, $params);
                         break;
-                        
+
                     case 'max':
                         $this->max($field, $params);
                         break;
@@ -53,8 +53,11 @@ class Validate
                     case 'exists':
                         $this->exists($field, $params);
                         break;
+
+                    case 'email':
+                        $this->email($field);
+                        break;
                 }
-                
             }
         }
     }
@@ -68,9 +71,9 @@ class Validate
     private function required($field)
     {
         if (empty($this->request()[$field])) {
-            $this->throwError('Campo '.$field. ' deve ser preenchido.', 1, $field);
+            $this->throwError('Campo ' . $field . ' deve ser preenchido.', 1, $field);
         }
-        
+
         $this->fields[] = [$field => $this->request()[$field]];
     }
 
@@ -85,7 +88,7 @@ class Validate
     {
         $length = strlen($this->request()[$field]);
         if ($length < $minimus) {
-            $this->throwError('O campo '. $field. ' deve ter pelo menos '. $minimus. ' caracteres.', 1, $field);
+            $this->throwError('O campo ' . $field . ' deve ter pelo menos ' . $minimus . ' caracteres.', 1, $field);
         }
     }
 
@@ -100,7 +103,7 @@ class Validate
     {
         $length = strlen($this->request()[$field]);
         if ($length > $maximum) {
-            $this->throwError('O campo '. $field. ' deve ter pelo menos '. $maximum. ' caracteres.', 1, $field);
+            $this->throwError('O campo ' . $field . ' deve ter pelo menos ' . $maximum . ' caracteres.', 1, $field);
         }
     }
 
@@ -116,7 +119,23 @@ class Validate
         $params = explode(',', $params);
 
         if (!in_array($this->request()[$field], $params)) {
-            $this->throwError('Valor do campo '. $field .' informada não existe.', 1, $field);
+            $this->throwError('Valor do campo ' . $field . ' informada não existe.', 1, $field);
+        }
+    }
+
+    /**
+     * Método responsavel por verificar dados do tipo email
+     *
+     * @param String $field
+     * @param String $params
+     * @return String
+     **/
+    private function email($field)
+    {
+        $email = filter_var($this->request()[$field], FILTER_SANITIZE_EMAIL);
+        
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->throwError('Valor do campo ' . $field . ' não é válido.', 1, $field);
         }
     }
 
@@ -143,7 +162,7 @@ class Validate
     {
         $hasErro = false;
         foreach ($data as $fields) {
-    
+
             foreach ($fields as $fieldName => $message) {
                 if ($fieldName == $field) {
                     $hasErro = true;
@@ -165,7 +184,7 @@ class Validate
     {
         $hasMessage = '';
         foreach ($data as $fields) {
-            
+
             foreach ($fields as $fieldName => $message) {
 
                 if ($fieldName == $field) {
