@@ -89,4 +89,26 @@ class Database
         
         return $this->connection->lastInsertId();
     }
+
+    /**
+     * Método responsavel por executar uma consulta no banco de dados
+     *
+     * @param String $join  JOIN cláusula
+     * @param String $where WHERE cláusula
+     * @param String $order ORDER cláusula
+     * @param String $limit LIMIT cláusula
+     * @param String $fields
+     * @return PDOStatement
+     **/
+    public function select($join = null, $where = null, $order = null, $limit = null, $fields = '*')
+    {
+        $join = strlen($join) ? $join : '';
+        $where = strlen($where) ? 'WHERE '. $where : '';
+        $order = strlen($order) ? 'ORDER BY '. $order : '';
+        $limit = strlen($limit) ? 'LIMIT '. $limit : '';
+
+        $query = 'SELECT '. $fields. ' FROM '. $this->table. ' '. $join. ' '. $where. ' '. $order. ' '. $limit;
+
+        return $this->execute($query);
+    }
 }
