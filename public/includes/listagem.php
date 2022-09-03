@@ -1,6 +1,6 @@
 <h1 class="mt-4 text-center">Listagem de Clientes</h1>
 
-<div class="card shadow-lg p-3 rounded">
+<div class="card shadow-lg rounded">
     <div class="card-body">
         <table class="table table-responsive">
             <thead>
