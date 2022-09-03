@@ -65,6 +65,7 @@
                                                     <div class="justify-content-end">
                                                         <form action="/excluir.php" method="POST">
                                                             <input type="hidden" name="id" value="<?= $cliente->id ?>">
+                                                            <input type="hidden" name="excluir" value="true">
                                                             <button type="button" class="btn btn-danger" data-dismiss="modal">
                                                                 Cancelar </button>
                                                             <button type="submit" class="btn btn-outline-success ml-2">
