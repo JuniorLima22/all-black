@@ -53,6 +53,7 @@ if (isset($_POST['nome'], $_POST['documento'])) {
         ]);
     }
 
+    /** Carrega dados dos inputs antigos do formulário */
     for ($i = 0; $i < count($validate->fields); $i++) {
         if (array_keys($validate->fields[$i])[0] == 'nome') {
             $nome_old = $validate->fields[$i]['nome'];
@@ -87,27 +88,47 @@ if (isset($_POST['nome'], $_POST['documento'])) {
     }
 
     if (count($validate->errors()) == 0) {
-        $obCliente->nome = $_POST['nome'];
-        $obCliente->documento = $_POST['documento'];
-        $obCliente->cep = $_POST['cep'];
-        $obCliente->endereco = $_POST['endereco'];
-        $obCliente->bairro = $_POST['bairro'];
-        $obCliente->cidade = $_POST['cidade'];
-        $obCliente->uf = $_POST['uf'];
-        $obCliente->telefone = $_POST['telefone'];
-        $obCliente->email = $_POST['email'];
-        $obCliente->ativo = $_POST['ativo'];
 
-        if ($obCliente->atualizar()) {
-            $session->flash('message', 'Cliente atualizado com sucesso.');
-            $session->flash('type', 'success');
+        /** Condições SQL */
+        $condicoes = [
+            'documento = ' . $_POST['documento'],
+            'id != ' . $_POST['id'],
+        ];
 
-            header('Location: /');
-            exit;
+        $condicoes = array_filter($condicoes);
+
+        /** Cláusula WHERE */
+        $where = implode(' AND ', $condicoes);
+
+        /** Consultar se documento do cliente já existe */
+        $documentoCliente = Cliente::getClientes(null, $where);
+
+        if (count($documentoCliente) == 0) {
+            $obCliente->nome = $_POST['nome'];
+            $obCliente->documento = $_POST['documento'];
+            $obCliente->cep = $_POST['cep'];
+            $obCliente->endereco = $_POST['endereco'];
+            $obCliente->bairro = $_POST['bairro'];
+            $obCliente->cidade = $_POST['cidade'];
+            $obCliente->uf = $_POST['uf'];
+            $obCliente->telefone = $_POST['telefone'];
+            $obCliente->email = $_POST['email'];
+            $obCliente->ativo = $_POST['ativo'];
+
+            if ($obCliente->atualizar()) {
+                $session->flash('message', 'Cliente atualizado com sucesso.');
+                $session->flash('type', 'success');
+
+                header('Location: /');
+                exit;
+            }
+
+            $session->flash('message', 'Erro ao atualizar cliente.');
+            $session->flash('type', 'danger');
+        } else {
+            $session->flash('message', 'O documento já está sendo utilizado por <strong>' . $documentoCliente[0]->nome) . '</strong>';
+            $session->flash('type', 'danger');
         }
-
-        $session->flash('message', 'Erro ao atualizar cliente.');
-        $session->flash('type', 'danger');
     }
 }
 
