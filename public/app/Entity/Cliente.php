@@ -97,9 +97,17 @@ class Cliente
             'atualizado_em' => $this->atualizado_em,
         ]);
 
-        // (new Database('precos'))->update('id_preco = '. $this->id_preco, [
-        //     'preco' => $this->preco,
-        // ]);
+        return true;
+    }
+
+    /**
+     * Método responsavel por deletar cliente no banco
+     *
+     * @return Boolean
+     **/
+    public function excluir()
+    {
+        (new Database('clientes'))->delete('id = '. $this->id);
 
         return true;
     }
