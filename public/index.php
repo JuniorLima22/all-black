@@ -1,8 +1,12 @@
 <?php
+session_start();
 
 require __DIR__.'/vendor/autoload.php';
 
+use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
+
+$session = new FlashMessage();
 
 $clientes = Cliente::getClientes();
 

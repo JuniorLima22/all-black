@@ -1,12 +1,19 @@
 <?php
+session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
+use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
+
+$session = new FlashMessage();
 
 /** Validação de $id identificador único de cliente */
 if (!isset($_POST['id']) or !is_numeric($_POST['id'])) {
-    header('Location: /?status=error_id_invalido');
+    $session->flash('message', 'ID do cliente inválido.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
     exit;
 }
 
@@ -15,17 +22,26 @@ $obCliente = Cliente::getCliente($_POST['id']);
 
 /** Validação se Cliente existe */
 if (!$obCliente instanceof Cliente) {
-    header('Location: /?status=error_cliente_nao_encontrado');
+    $session->flash('message', 'Cliente não encontrado.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
     exit;
 }
 
 if (isset($_POST['excluir'])) {
 
     if ($obCliente->excluir()) {
-        header('Location: /?status=success_cliente_excluido');
+        $session->flash('message', 'Cliente excluido com sucesso.');
+        $session->flash('type', 'success');
+
+        header('Location: /');
         exit;
     }
 
-    header('Location: /?status=error_ao_excluir_cliente');
+    $session->flash('message', 'Erro ao excluir cliente.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
     exit;
 }

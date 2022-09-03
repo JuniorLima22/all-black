@@ -1,11 +1,15 @@
 <?php
+session_start();
+
 require __DIR__ . '/vendor/autoload.php';
 
 define('TITLE', 'Cadastrar Cliente');
 
+use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
 use App\Helpers\Validate;
 
+$session = new FlashMessage();
 $validate = new Validate();
 
 if (isset($_POST['nome'], $_POST['documento'])) {
@@ -75,9 +79,15 @@ if (isset($_POST['nome'], $_POST['documento'])) {
         $obCliente->ativo = $_POST['ativo'];
 
         if ($obCliente->cadastrar()) {
-            header('Location: index.php?status=success');
+            $session->flash('message', 'Cliente cadastrado com sucesso.');
+            $session->flash('type', 'success');
+            
+            header('Location: /');
             exit;
         }
+        
+        $session->flash('message', 'Erro ao cadastrar cliente.');
+        $session->flash('type', 'danger');
     }
 }
 

@@ -1,16 +1,23 @@
 <?php
+session_start();
+
 require __DIR__ . '/vendor/autoload.php';
 
 define('TITLE', 'Editar Cliente');
 
+use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
 use App\Helpers\Validate;
 
+$session = new FlashMessage();
 $validate = new Validate();
 
 /** Validação de $id identificador único de cliente */
-if (!isset($_REQUEST['id']) OR !is_numeric($_REQUEST['id'])) {
-    header('Location: /?status=error_id_invalido');
+if (!isset($_REQUEST['id']) or !is_numeric($_REQUEST['id'])) {
+    $session->flash('message', 'ID do cliente inválido.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
     exit;
 }
 
@@ -19,7 +26,10 @@ $obCliente = Cliente::getCliente($_REQUEST['id']);
 
 /** Validação se Cliente existe */
 if (!$obCliente instanceof Cliente) {
-    header('Location: /?status=error_cliente_nao_encontrado');
+    $session->flash('message', 'Cliente não encontrado.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
     exit;
 }
 
@@ -89,9 +99,15 @@ if (isset($_POST['nome'], $_POST['documento'])) {
         $obCliente->ativo = $_POST['ativo'];
 
         if ($obCliente->atualizar()) {
-            header('Location: index.php?status=success_cliente_atualizado');
+            $session->flash('message', 'Cliente atualizado com sucesso.');
+            $session->flash('type', 'success');
+
+            header('Location: /');
             exit;
         }
+
+        $session->flash('message', 'Erro ao atualizar cliente.');
+        $session->flash('type', 'danger');
     }
 }
 

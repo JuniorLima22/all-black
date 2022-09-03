@@ -1,10 +1,19 @@
-<h1 class="mt-4 text-center"><?=TITLE?></h1>
+<h1 class="mt-4 text-center"><?= TITLE ?></h1>
 
 <div class="card shadow-lg p-3 rounded">
     <div class="card-body">
+        <?php if ($session->has('message')) : ?>
+            <div class="alert alert-<?php if ($session->has('type')) echo $session->get('type') ?> alert-dismissible fade show" role="alert">
+                <?= $session->get('message') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
+
         <form name="<?= (TITLE == 'Editar Cliente') ? 'Atualizar' : 'Cadastrar' ?>" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <?php if(isset($_REQUEST['id'])): ?>
-                <input type="hidden" name="id" value="<?= $_REQUEST['id']?>">
+            <?php if (isset($_REQUEST['id'])) : ?>
+                <input type="hidden" name="id" value="<?= $_REQUEST['id'] ?>">
             <?php endif; ?>
             <div class="form-row">
                 <div class="col-md-6 mb-3">
@@ -66,7 +75,7 @@
                     <!-- TODO: Carregar campo_old -->
                     <select name="uf" id="uf" class="custom-select <?php if ($validate->hasErro('uf', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerUf">
                         <option selected value="">Selecione...</option>
-                        <option value="AC" <?php if(!empty($uf_old) && $uf_old == 'AC') echo 'selected' ?>>Acre</option>
+                        <option value="AC" <?php if (!empty($uf_old) && $uf_old == 'AC') echo 'selected' ?>>Acre</option>
                         <option value="AL">Alagoas</option>
                         <option value="AP">Amapá</option>
                         <option value="AM">Amazonas</option>
@@ -140,8 +149,8 @@
                     <label for="ativo">Ativo</label>
                     <select name="ativo" id="ativo" class="custom-select <?php if ($validate->hasErro('ativo', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerAtivo">
                         <option value="">Selecione...</option>
-                        <option value="SIM" <?php if((!empty($obCliente->ativo) && $obCliente->ativo == 'SIM') OR !empty($ativo_old) && $ativo_old == 'SIM') echo 'selected' ?>>SIM</option>
-                        <option value="NÃO" <?php if((!empty($obCliente->ativo) && $obCliente->ativo == 'NÃO') OR !empty($ativo_old) && $ativo_old == 'NÃO') echo 'selected' ?>>NÃO</option>
+                        <option value="SIM" <?php if ((!empty($obCliente->ativo) && $obCliente->ativo == 'SIM') or !empty($ativo_old) && $ativo_old == 'SIM') echo 'selected' ?>>SIM</option>
+                        <option value="NÃO" <?php if ((!empty($obCliente->ativo) && $obCliente->ativo == 'NÃO') or !empty($ativo_old) && $ativo_old == 'NÃO') echo 'selected' ?>>NÃO</option>
                     </select>
                     <?php if ($validate->hasErro('ativo', $validate->errors())) : ?>
                         <div id="validationServerAtivo" class="invalid-feedback">

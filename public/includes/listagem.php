@@ -2,6 +2,14 @@
 
 <div class="card shadow-lg p-3 rounded">
     <div class="card-body">
+        <?php if ($session->has('message')) : ?>
+            <div class="alert alert-<?php if ($session->has('type')) echo $session->get('type') ?> alert-dismissible fade show" role="alert">
+                <?= $session->get('message') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
         <table class="table table-responsive">
             <thead>
                 <tr>
@@ -111,10 +119,10 @@
                                                             <tr>
                                                                 <th class="text-wrap">Endereço</th>
                                                                 <td>
-                                                                    <?= $cliente->endereco ?>, 
+                                                                    <?= $cliente->endereco ?>,
                                                                     <?= $cliente->bairro ?> <br>
-                                                                    <?= $cliente->cidade ?> - 
-                                                                    <?= $cliente->uf ?> - 
+                                                                    <?= $cliente->cidade ?> -
+                                                                    <?= $cliente->uf ?> -
                                                                     <?= $cliente->cep ?>
                                                                 </td>
                                                             </tr>
