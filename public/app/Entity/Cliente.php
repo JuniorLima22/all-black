@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use App\Db\Database;
@@ -11,10 +12,10 @@ class Cliente
 
     /** @var String $nome Nome do cliente */
     public $nome;
-    
+
     /** @var Number $documento Documento do cliente */
     public $documento;
-    
+
     /** @var Number $cep Cep do cliente */
     public $cep;
 
@@ -23,7 +24,7 @@ class Cliente
 
     /** @var String $bairro Bairro do cliente */
     public $bairro;
-    
+
     /** @var String $cidade Cidade do cliente */
     public $cidade;
 
@@ -38,7 +39,7 @@ class Cliente
 
     /** @var String $ativo Define se cliente está ativo */
     public $ativo;
-    
+
     /** @var String $atualizado_em Data de atualização do cliente */
     public $atualizado_em;
 
@@ -85,6 +86,18 @@ class Cliente
     public static function getClientes($join = null, $where = null, $order = null, $limit = null)
     {
         return (new Database('clientes'))->select($join, $where, $order, $limit)
-                                         ->fetchAll(PDO::FETCH_CLASS, self::class);
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    /**
+     * Método responsavel por buscar um cliente com base em seu ID
+     *
+     * @param Integer $id
+     * @return Cliente
+     **/
+    public static function getCliente($id)
+    {
+        return (new Database('clientes'))->select(null, 'id = ' . $id)
+            ->fetchObject(self::class);
     }
 }
