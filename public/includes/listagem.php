@@ -30,8 +30,8 @@
                             <td><?= $cliente->telefone ?></td>
                             <td><?= $cliente->email ?></td>
                             <td class="text-center"><?= $cliente->ativo ?></td>
-                            <td class="text-nowrap"><?= date('d/m/Y H:i:s', strtotime($cliente->criado_em)) ?></td>
-                            <td class="text-nowrap"><?= date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) ?></td>
+                            <td class="text-nowrap"><?= (!empty($cliente->criado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->criado_em)) : '' ?></td>
+                            <td class="text-nowrap"><?= (!empty($cliente->atualizado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) : '' ?></td>
                             <td>
                                 <nobr>
                                     <button type="button" class="btn btn-default shadow" title="Detalhes do cliente" data-toggle="modal" data-target="#modal-details-<?= $cliente->id ?>">
@@ -123,11 +123,11 @@
                                                             </tr>
                                                             <tr>
                                                                 <th>Data cadastrado</th>
-                                                                <td><?= date('d/m/Y H:i:s', strtotime($cliente->criado_em)) ?></td>
+                                                                <td><?= (!empty($cliente->criado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->criado_em)) : '' ?></td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Data atualizado</th>
-                                                                <td><?= date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) ?></td>
+                                                                <td><?= (!empty($cliente->atualizado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) : '' ?></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
