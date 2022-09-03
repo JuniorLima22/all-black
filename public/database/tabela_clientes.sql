@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefone` varchar(20) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `ativo` enum('SIM','NÃO') NOT NULL,
-  `criado_em` datetime DEFAULT NULL,
+  `criado_em` datetime DEFAULT CURRENT_TIMESTAMP,
   `atualizado_em` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `documento` (`documento`)
