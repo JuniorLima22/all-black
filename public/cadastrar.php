@@ -1,6 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
 
+define('TITLE', 'Cadastrar Cliente');
+
 use App\Entity\Cliente;
 use App\Helpers\Validate;
 

@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('.load').fadeOut('slow', function(){
-        $('#btn_cadastrar_editar').text('Cadastrar');
+        $('#btn_cadastrar_editar').text($('form').attr('name'));
     });
 });
 
