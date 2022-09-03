@@ -18,7 +18,8 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="nome">Nome</label>
-                    <input type="text" name="nome" id="nome" class="form-control <?php if ($validate->hasErro('nome', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($nome_old)) echo $nome_old; elseif(!empty($obCliente->nome)) echo $obCliente->nome; ?>" aria-describedby="validationServerNome" placeholder="Nome">
+                    <input type="text" name="nome" id="nome" class="form-control <?php if ($validate->hasErro('nome', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($nome_old)) echo $nome_old;
+                                                                                                                                                                                    elseif (!empty($obCliente->nome)) echo $obCliente->nome; ?>" aria-describedby="validationServerNome" placeholder="Nome">
                     <?php if ($validate->hasErro('nome', $validate->errors())) : ?>
                         <div id="validationServerNome" class="invalid-feedback">
                             <?= $validate->errorMessage('nome', $validate->errors()) ?>
@@ -28,7 +29,8 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="documento">Documento</label>
-                    <input type="number" name="documento" id="documento" class="form-control <?php if ($validate->hasErro('documento', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($documento_old)) echo $documento_old; elseif(!empty($obCliente->documento)) echo $obCliente->documento; ?>" aria-describedby="validationServerDocumento" placeholder="Documento" step="1">
+                    <input type="number" name="documento" id="documento" class="form-control <?php if ($validate->hasErro('documento', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($documento_old)) echo $documento_old;
+                                                                                                                                                                                                        elseif (!empty($obCliente->documento)) echo $obCliente->documento; ?>" aria-describedby="validationServerDocumento" placeholder="Documento" step="1">
                     <?php if ($validate->hasErro('documento', $validate->errors())) : ?>
                         <div id="validationServerDocumento" class="invalid-feedback">
                             <?= $validate->errorMessage('documento', $validate->errors()) ?>
@@ -40,7 +42,8 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="telefone">Telefone</label>
-                    <input type="text" name="telefone" id="telefone" class="form-control <?php if ($validate->hasErro('telefone', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($telefone_old)) echo $telefone_old; elseif(!empty($obCliente->telefone)) echo $obCliente->telefone; ?>" aria-describedby="validationServerTelefone" placeholder="Telefone">
+                    <input type="text" name="telefone" id="telefone" class="form-control <?php if ($validate->hasErro('telefone', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($telefone_old)) echo $telefone_old;
+                                                                                                                                                                                                elseif (!empty($obCliente->telefone)) echo $obCliente->telefone; ?>" aria-describedby="validationServerTelefone" placeholder="Telefone">
                     <?php if ($validate->hasErro('telefone', $validate->errors())) : ?>
                         <div id="validationServerTelefone" class="invalid-feedback">
                             <?= $validate->errorMessage('telefone', $validate->errors()) ?>
@@ -50,7 +53,8 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="email">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control <?php if ($validate->hasErro('email', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($email_old)) echo $email_old; elseif(!empty($obCliente->email)) echo $obCliente->email; ?>" aria-describedby="validationServerEmail" placeholder="E-mail" step="1">
+                    <input type="email" name="email" id="email" class="form-control <?php if ($validate->hasErro('email', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($email_old)) echo $email_old;
+                                                                                                                                                                                        elseif (!empty($obCliente->email)) echo $obCliente->email; ?>" aria-describedby="validationServerEmail" placeholder="E-mail" step="1">
                     <?php if ($validate->hasErro('email', $validate->errors())) : ?>
                         <div id="validationServerEmail" class="invalid-feedback">
                             <?= $validate->errorMessage('email', $validate->errors()) ?>
@@ -62,7 +66,8 @@
             <div class="form-row">
                 <div class="col-md-3 mb-3">
                     <label for="cep">CEP</label>
-                    <input type="number" name="cep" id="cep" maxlength="8" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cep_old)) echo $cep_old; elseif(!empty($obCliente->cep)) echo $obCliente->cep; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
+                    <input type="number" name="cep" id="cep" maxlength="8" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($cep_old)) echo $cep_old;
+                                                                                                                                                                                                    elseif (!empty($obCliente->cep)) echo $obCliente->cep; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
                     <?php if ($validate->hasErro('cep', $validate->errors())) : ?>
                         <div id="validationServerCep" class="invalid-feedback">
                             <?= $validate->errorMessage('cep', $validate->errors()) ?>
@@ -72,37 +77,13 @@
 
                 <div class="col-md-3 mb-3">
                     <label for="uf">UF</label>
-                    <!-- TODO: Carregar campo_old -->
                     <select name="uf" id="uf" class="custom-select <?php if ($validate->hasErro('uf', $validate->errors())) : ?> is-invalid <?php endif; ?>" aria-describedby="validationServerUf">
                         <option selected value="">Selecione...</option>
-                        <option value="AC" <?php if (!empty($uf_old) && $uf_old == 'AC') echo 'selected' ?>>Acre</option>
-                        <option value="AL">Alagoas</option>
-                        <option value="AP">Amapá</option>
-                        <option value="AM">Amazonas</option>
-                        <option value="BA">Bahia</option>
-                        <option value="CE">Ceará</option>
-                        <option value="DF">Distrito Federal</option>
-                        <option value="ES">Espírito Santo</option>
-                        <option value="GO">Goiás</option>
-                        <option value="MA">Maranhão</option>
-                        <option value="MT">Mato Grosso</option>
-                        <option value="MS">Mato Grosso do Sul</option>
-                        <option value="MG">Minas Gerais</option>
-                        <option value="PA">Pará</option>
-                        <option value="PB">Paraíba</option>
-                        <option value="PR">Paraná</option>
-                        <option value="PE">Pernambuco</option>
-                        <option value="PI">Piauí</option>
-                        <option value="RJ">Rio de Janeiro</option>
-                        <option value="RN">Rio Grande do Norte</option>
-                        <option value="RS">Rio Grande do Sul</option>
-                        <option value="RO">Rondônia</option>
-                        <option value="RR">Roraima</option>
-                        <option value="SC">Santa Catarina</option>
-                        <option value="SP">São Paulo</option>
-                        <option value="SE">Sergipe</option>
-                        <option value="TO">Tocantins</option>
-                        <option value="EX">Estrangeiro</option>
+                        <?php
+                        $estados = ['AC'=>'Acre','AL'=>'Alagoas','AP'=>'Amapá','AM'=>'Amazonas','BA'=>'Bahia','CE'=>'Ceará','DF'=>'Distrito Federal','ES'=>'Espírito Santo','GO'=>'Goiás','MA'=>'Maranhão','MT'=>'Mato Grosso','MS'=>'Mato Grosso do Sul','MG'=>'Minas Gerais','PA'=>'Pará','PB'=>'Paraíba','PR'=>'Paraná','PE'=>'Pernambuco','PI'=>'Piauí','RJ'=>'Rio de Janeiro','RN'=>'Rio Grande do Norte','RS'=>'Rio Grande do Sul','RO'=>'Rondônia','RR'=>'Roraima','SC'=>'Santa Catarina','SP'=>'São Paulo','SE'=>'Sergipe','TO'=>'Tocantins','EX'=>'Estrangeiro'];
+                        foreach ($estados as $uf => $estado) : ?>
+                            <option value="<?=$uf?>" <?php if(!empty($uf_old) && $uf_old == $uf OR (!empty($obCliente->uf) && $obCliente->uf == $uf)) echo 'selected' ?> ><?=$estado?></option>
+                        <?php endforeach; ?>
                     </select>
                     <?php if ($validate->hasErro('uf', $validate->errors())) : ?>
                         <div id="validationServerUf" class="invalid-feedback">
@@ -113,7 +94,8 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="cidade">Cidade</label>
-                    <input type="text" name="cidade" id="cidade" class="form-control <?php if ($validate->hasErro('cidade', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cidade_old)) echo $cidade_old; elseif(!empty($obCliente->cidade)) echo $obCliente->cidade; ?>" aria-describedby="validationServerCidade" placeholder="Cidade">
+                    <input type="text" name="cidade" id="cidade" class="form-control <?php if ($validate->hasErro('cidade', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($cidade_old)) echo $cidade_old;
+                                                                                                                                                                                            elseif (!empty($obCliente->cidade)) echo $obCliente->cidade; ?>" aria-describedby="validationServerCidade" placeholder="Cidade">
                     <?php if ($validate->hasErro('cidade', $validate->errors())) : ?>
                         <div id="validationServerCidade" class="invalid-feedback">
                             <?= $validate->errorMessage('cidade', $validate->errors()) ?>
@@ -125,7 +107,8 @@
             <div class="form-row">
                 <div class="col-md-6 mb-3">
                     <label for="bairro">Bairro</label>
-                    <input type="text" name="bairro" id="bairro" class="form-control <?php if ($validate->hasErro('bairro', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($bairro_old)) echo $bairro_old; elseif(!empty($obCliente->bairro)) echo $obCliente->bairro; ?>" aria-describedby="validationServerBairro" placeholder="Bairro">
+                    <input type="text" name="bairro" id="bairro" class="form-control <?php if ($validate->hasErro('bairro', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($bairro_old)) echo $bairro_old;
+                                                                                                                                                                                            elseif (!empty($obCliente->bairro)) echo $obCliente->bairro; ?>" aria-describedby="validationServerBairro" placeholder="Bairro">
                     <?php if ($validate->hasErro('bairro', $validate->errors())) : ?>
                         <div id="validationServerBairro" class="invalid-feedback">
                             <?= $validate->errorMessage('bairro', $validate->errors()) ?>
@@ -135,7 +118,8 @@
 
                 <div class="col-md-6 mb-3">
                     <label for="endereco">Endereço</label>
-                    <input type="text" name="endereco" id="endereco" class="form-control <?php if ($validate->hasErro('endereco', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($endereco_old)) echo $endereco_old; elseif(!empty($obCliente->endereco)) echo $obCliente->endereco; ?>" aria-describedby="validationServerEndereco" placeholder="Endereço">
+                    <input type="text" name="endereco" id="endereco" class="form-control <?php if ($validate->hasErro('endereco', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if (!empty($endereco_old)) echo $endereco_old;
+                                                                                                                                                                                                elseif (!empty($obCliente->endereco)) echo $obCliente->endereco; ?>" aria-describedby="validationServerEndereco" placeholder="Endereço">
                     <?php if ($validate->hasErro('endereco', $validate->errors())) : ?>
                         <div id="validationServerEndereco" class="invalid-feedback">
                             <?= $validate->errorMessage('endereco', $validate->errors()) ?>
