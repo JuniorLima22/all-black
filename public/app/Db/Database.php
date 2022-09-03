@@ -46,11 +46,11 @@ class Database
     public function setConnection()
     {
         try {
-            $this->connection = new PDO('mysql:host='.self::HOST.';port='.self::PORT.';dbname='.self::NAME.';charset=utf8mb4', self::USER, self::PASS);
+            $this->connection = new PDO('mysql:host=' . self::HOST . ';port=' . self::PORT . ';dbname=' . self::NAME . ';charset=utf8mb4', self::USER, self::PASS);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         } catch (PDOException $e) {
-            die('Error Connect: '. $e->getMessage());
+            die('Error Connect: ' . $e->getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ class Database
             $statement->execute($params);
             return $statement;
         } catch (PDOException $e) {
-            die('Error Execute: '. $e->getMessage());
+            die('Error Execute: ' . $e->getMessage());
         }
     }
 
@@ -82,11 +82,11 @@ class Database
     {
         $fields = array_keys($values);
         $binds = array_pad([], count($fields), '?');
-        
-        $query = 'INSERT INTO '. $this->table. ' ('. implode(',', $fields) .') VALUES ('. implode(',', $binds) .')';
+
+        $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') VALUES (' . implode(',', $binds) . ')';
 
         $this->execute($query, array_values($values));
-        
+
         return $this->connection->lastInsertId();
     }
 
@@ -100,10 +100,25 @@ class Database
     public function update($where, $values)
     {
         $fields = array_keys($values);
-        
-        $query = 'UPDATE '. $this->table .' SET '. implode('=?,', $fields) .'=? WHERE '. $where;
-        
+
+        $query = 'UPDATE ' . $this->table . ' SET ' . implode('=?,', $fields) . '=? WHERE ' . $where;
+
         $this->execute($query, array_values($values));
+
+        return true;
+    }
+
+    /**
+     * Método responsavel por deletar dados no banco de dados
+     *
+     * @param String $where
+     * @return Boolean
+     **/
+    public function delete($where)
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
+
+        $this->execute($query);
 
         return true;
     }
@@ -121,11 +136,11 @@ class Database
     public function select($join = null, $where = null, $order = null, $limit = null, $fields = '*')
     {
         $join = strlen($join) ? $join : '';
-        $where = strlen($where) ? 'WHERE '. $where : '';
-        $order = strlen($order) ? 'ORDER BY '. $order : '';
-        $limit = strlen($limit) ? 'LIMIT '. $limit : '';
+        $where = strlen($where) ? 'WHERE ' . $where : '';
+        $order = strlen($order) ? 'ORDER BY ' . $order : '';
+        $limit = strlen($limit) ? 'LIMIT ' . $limit : '';
 
-        $query = 'SELECT '. $fields. ' FROM '. $this->table. ' '. $join. ' '. $where. ' '. $order. ' '. $limit;
+        $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $join . ' ' . $where . ' ' . $order . ' ' . $limit;
 
         return $this->execute($query);
     }
