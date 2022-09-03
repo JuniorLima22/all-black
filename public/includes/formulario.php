@@ -62,7 +62,7 @@
             <div class="form-row">
                 <div class="col-md-3 mb-3">
                     <label for="cep">CEP</label>
-                    <input type="number" name="cep" id="cep" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cep_old)) echo $cep_old; elseif(!empty($obCliente->cep)) echo $obCliente->cep; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
+                    <input type="number" name="cep" id="cep" maxlength="8" class="form-control <?php if ($validate->hasErro('cep', $validate->errors())) : ?> is-invalid <?php endif; ?>" value="<?php if(!empty($cep_old)) echo $cep_old; elseif(!empty($obCliente->cep)) echo $obCliente->cep; ?>" aria-describedby="validationServerCep" placeholder="CEP" step="1">
                     <?php if ($validate->hasErro('cep', $validate->errors())) : ?>
                         <div id="validationServerCep" class="invalid-feedback">
                             <?= $validate->errorMessage('cep', $validate->errors()) ?>

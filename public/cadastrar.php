@@ -17,7 +17,7 @@ if (isset($_POST['nome'], $_POST['documento'])) {
     $validate->validate([
         'nome' => ['max:200', 'min:3', 'required'],
         'documento' => ['numeric', 'required'],
-        'cep' => ['numeric', 'required'],
+        'cep' => ['max:8', 'numeric', 'required'],
         'endereco' => ['max:255', 'min:3', 'required'],
         'bairro' => ['max:255', 'required'],
         'cidade' => ['max:100', 'required'],
