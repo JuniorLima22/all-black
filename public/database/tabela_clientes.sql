@@ -2400,6 +2400,7 @@ INSERT INTO `clientes` (`nome`,`documento`,`cep`,`endereco`,`bairro`,`cidade`,`u
 INSERT INTO `clientes` (`nome`,`documento`,`cep`,`endereco`,`bairro`,`cidade`,`uf`,`telefone`,`email`,`ativo`) VALUES ('PLASTMAR INDUSTRIA E COMERCIO DE PLASTIC','97260350000129','95540000','Av. Luis Silveira, 1073/5','Centro','Palmares do Sul','RS','','fulanodetal2374@gmail.com','NÃO');
 INSERT INTO `clientes` (`nome`,`documento`,`cep`,`endereco`,`bairro`,`cidade`,`uf`,`telefone`,`email`,`ativo`) VALUES ('FERNANDO ALVES DA SILVA - MERCEARIA - ME','97437032000190','77270000','Rua 09 Quadra 06 Lote 17','Jardim Aureny Ii','Palmas','TO','6335711875','fulanodetal2375@gmail.com','SIM');
 INSERT INTO `clientes` (`nome`,`documento`,`cep`,`endereco`,`bairro`,`cidade`,`uf`,`telefone`,`email`,`ativo`) VALUES ('FC MELO CIA LTDA EPP - 506 - I','97476543000111','37775000','Rua Prefeito Nestor Martins Nr 147','Centro','Santa Rita de Caldas','MG','3537341406','fulanodetal2376@gmail.com','NÃO');
+INSERT INTO `clientes` (`nome`,`documento`,`cep`,`endereco`,`bairro`,`cidade`,`uf`,`telefone`,`email`,`ativo`) VALUES ('JUNIOR LIMA SQL','11111111111','22222222','Travessa Jr Lima, 0022','Cahb','Sobral','CE','9999999999','juniorlima.dev@gmail.com','SIM');
 
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 
