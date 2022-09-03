@@ -75,6 +75,36 @@ class Cliente
     }
 
     /**
+     * Método responsavel por atualizar cliente no banco
+     *
+     * @return Boolean
+     **/
+    public function atualizar()
+    {
+        $this->atualizado_em = date('Y-m-d H:i:s');
+
+        (new Database('clientes'))->update('id = ' . $this->id, [
+            'nome' => $this->nome,
+            'documento' => $this->documento,
+            'cep' => $this->cep,
+            'endereco' => $this->endereco,
+            'bairro' => $this->bairro,
+            'cidade' => $this->cidade,
+            'uf' => $this->uf,
+            'telefone' => $this->telefone,
+            'email' => $this->email,
+            'ativo' => $this->ativo,
+            'atualizado_em' => $this->atualizado_em,
+        ]);
+
+        // (new Database('precos'))->update('id_preco = '. $this->id_preco, [
+        //     'preco' => $this->preco,
+        // ]);
+
+        return true;
+    }
+
+    /**
      * Método responsavel por listar clientes do banco de dados
      *
      * @param String $join  JOIN cláusula
