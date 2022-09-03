@@ -97,7 +97,8 @@ if (isset($_POST['nome'], $_POST['documento'])) {
             $session->flash('message', 'Erro ao cadastrar cliente.');
             $session->flash('type', 'danger');
         } else {
-            $session->flash('message', 'O documento já está sendo utilizado.');
+            $session->flash('message', 'O documento já está sendo utilizado por <strong>' . $cliente[0]->nome) . '</strong>';
+
             $session->flash('type', 'danger');
         }
     }
