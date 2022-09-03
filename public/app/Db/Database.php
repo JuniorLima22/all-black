@@ -91,6 +91,24 @@ class Database
     }
 
     /**
+     * Método responsavel por atualizar dados no banco de dados
+     *
+     * @param String $where
+     * @param Array $values [field => value]
+     * @return Boolean
+     **/
+    public function update($where, $values)
+    {
+        $fields = array_keys($values);
+        
+        $query = 'UPDATE '. $this->table .' SET '. implode('=?,', $fields) .'=? WHERE '. $where;
+        
+        $this->execute($query, array_values($values));
+
+        return true;
+    }
+
+    /**
      * Método responsavel por executar uma consulta no banco de dados
      *
      * @param String $join  JOIN cláusula
