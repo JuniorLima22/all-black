@@ -66,28 +66,40 @@ if (isset($_POST['nome'], $_POST['documento'])) {
     }
 
     if (count($validate->errors()) == 0) {
-        $obCliente = new Cliente;
-        $obCliente->nome = $_POST['nome'];
-        $obCliente->documento = $_POST['documento'];
-        $obCliente->cep = $_POST['cep'];
-        $obCliente->endereco = $_POST['endereco'];
-        $obCliente->bairro = $_POST['bairro'];
-        $obCliente->cidade = $_POST['cidade'];
-        $obCliente->uf = $_POST['uf'];
-        $obCliente->telefone = $_POST['telefone'];
-        $obCliente->email = $_POST['email'];
-        $obCliente->ativo = $_POST['ativo'];
 
-        if ($obCliente->cadastrar()) {
-            $session->flash('message', 'Cliente cadastrado com sucesso.');
-            $session->flash('type', 'success');
-            
-            header('Location: /');
-            exit;
+        /** Cláusula WHERE */
+        $where = 'documento = ' . $_POST['documento'];
+
+        /** Consultar se documento do cliente já existe */
+        $cliente = Cliente::getClientes(null, $where);
+
+        if (count($cliente) == 0) {
+            $obCliente = new Cliente;
+            $obCliente->nome = $_POST['nome'];
+            $obCliente->documento = $_POST['documento'];
+            $obCliente->cep = $_POST['cep'];
+            $obCliente->endereco = $_POST['endereco'];
+            $obCliente->bairro = $_POST['bairro'];
+            $obCliente->cidade = $_POST['cidade'];
+            $obCliente->uf = $_POST['uf'];
+            $obCliente->telefone = $_POST['telefone'];
+            $obCliente->email = $_POST['email'];
+            $obCliente->ativo = $_POST['ativo'];
+
+            if ($obCliente->cadastrar()) {
+                $session->flash('message', 'Cliente cadastrado com sucesso.');
+                $session->flash('type', 'success');
+
+                header('Location: /');
+                exit;
+            }
+
+            $session->flash('message', 'Erro ao cadastrar cliente.');
+            $session->flash('type', 'danger');
+        } else {
+            $session->flash('message', 'O documento já está sendo utilizado.');
+            $session->flash('type', 'danger');
         }
-        
-        $session->flash('message', 'Erro ao cadastrar cliente.');
-        $session->flash('type', 'danger');
     }
 }
 
