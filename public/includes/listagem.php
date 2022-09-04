@@ -1,5 +1,34 @@
 <h1 class="mt-4 text-center">Listagem de Clientes</h1>
 
+<div class="card shadow-sm mb-2 rounded">
+    <div class="card-body">
+        <form name="Buscar" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="busca">Nome ou Documento</label>
+                    <input type="search" name="busca" id="busca" class="form-control" value="<?php if(!empty($busca)) echo $busca; ?>" aria-describedby="validationServerNome" placeholder="Nome ou Documento" autofocus>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="ativo">Status</label>
+                    <select name="ativo" id="ativo" class="custom-select" aria-describedby="validationServerAtivo">
+                        <option value="">Selecione...</option>
+                        <option value="SIM" <?php if (!empty($ativo) && $ativo == 'SIM') echo 'selected' ?>>SIM</option>
+                        <option value="NÃO" <?php if (!empty($ativo) && $ativo == 'NÃO') echo 'selected' ?>>NÃO</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end mt-3">
+                    <button type="submit" class="btn btn-dark">
+                        <span class="load spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="card shadow-lg p-3 rounded">
     <div class="card-body">
         <?php if ($session->has('message')) : ?>
