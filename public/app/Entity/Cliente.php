@@ -107,7 +107,7 @@ class Cliente
      **/
     public function excluir()
     {
-        (new Database('clientes'))->delete('id = '. $this->id);
+        (new Database('clientes'))->delete('id = ' . $this->id);
 
         return true;
     }
@@ -125,6 +125,19 @@ class Cliente
     {
         return (new Database('clientes'))->select($join, $where, $order, $limit)
             ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    /**
+     * Método responsavel por obter a quantidade de clientes do banco de dados
+     *
+     * @param String $where WHERE cláusula
+     * @return Integer
+     **/
+    public static function getQuantidadeClientes($where = null)
+    {
+        return (new Database('clientes'))->select(null, $where, null, null, 'COUNT(*) AS qtd')
+            ->fetchObject()
+            ->qtd;
     }
 
     /**
