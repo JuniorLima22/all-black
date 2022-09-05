@@ -85,7 +85,7 @@ git clone https://github.com/JuniorLima22/all-black.git
 cd all-blacks
 ```
 
-### Ambiente Docker <a href="phpdocker/README.html">mais informações</a>
+### Ambiente Docker <a href="phpdocker/README.md">mais informações</a>
 
 #### Iniciar todos os contêineres em segundo plano
 
