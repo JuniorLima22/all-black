@@ -13,6 +13,9 @@
           <li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'cadastrar')) echo 'active' ?>">
             <a class="nav-link" href="cadastrar.php">Cadastrar</span></a>
           </li>
+          <li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'carregar_xml')) echo 'active' ?>">
+            <a class="nav-link" href="carregar_xml.php">Carregar XML</span></a>
+          </li>
         </ul>
       </div>
     </nav>

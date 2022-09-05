@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Entity;
 
 use App\Db\Database;
@@ -11,10 +12,10 @@ class Cliente
 
     /** @var String $nome Nome do cliente */
     public $nome;
-    
+
     /** @var Number $documento Documento do cliente */
     public $documento;
-    
+
     /** @var Number $cep Cep do cliente */
     public $cep;
 
@@ -23,7 +24,7 @@ class Cliente
 
     /** @var String $bairro Bairro do cliente */
     public $bairro;
-    
+
     /** @var String $cidade Cidade do cliente */
     public $cidade;
 
@@ -38,7 +39,7 @@ class Cliente
 
     /** @var String $ativo Define se cliente está ativo */
     public $ativo;
-    
+
     /** @var String $atualizado_em Data de atualização do cliente */
     public $atualizado_em;
 
@@ -74,6 +75,44 @@ class Cliente
     }
 
     /**
+     * Método responsavel por atualizar cliente no banco
+     *
+     * @return Boolean
+     **/
+    public function atualizar()
+    {
+        $this->atualizado_em = date('Y-m-d H:i:s');
+
+        (new Database('clientes'))->update('id = ' . $this->id, [
+            'nome' => $this->nome,
+            'documento' => $this->documento,
+            'cep' => $this->cep,
+            'endereco' => $this->endereco,
+            'bairro' => $this->bairro,
+            'cidade' => $this->cidade,
+            'uf' => $this->uf,
+            'telefone' => $this->telefone,
+            'email' => $this->email,
+            'ativo' => $this->ativo,
+            'atualizado_em' => $this->atualizado_em,
+        ]);
+
+        return true;
+    }
+
+    /**
+     * Método responsavel por deletar cliente no banco
+     *
+     * @return Boolean
+     **/
+    public function excluir()
+    {
+        (new Database('clientes'))->delete('id = ' . $this->id);
+
+        return true;
+    }
+
+    /**
      * Método responsavel por listar clientes do banco de dados
      *
      * @param String $join  JOIN cláusula
@@ -85,6 +124,31 @@ class Cliente
     public static function getClientes($join = null, $where = null, $order = null, $limit = null)
     {
         return (new Database('clientes'))->select($join, $where, $order, $limit)
-                                         ->fetchAll(PDO::FETCH_CLASS, self::class);
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    /**
+     * Método responsavel por obter a quantidade de clientes do banco de dados
+     *
+     * @param String $where WHERE cláusula
+     * @return Integer
+     **/
+    public static function getQuantidadeClientes($where = null)
+    {
+        return (new Database('clientes'))->select(null, $where, null, null, 'COUNT(*) AS qtd')
+            ->fetchObject()
+            ->qtd;
+    }
+
+    /**
+     * Método responsavel por buscar um cliente com base em seu ID
+     *
+     * @param Integer $id
+     * @return Cliente
+     **/
+    public static function getCliente($id)
+    {
+        return (new Database('clientes'))->select(null, 'id = ' . $id)
+            ->fetchObject(self::class);
     }
 }

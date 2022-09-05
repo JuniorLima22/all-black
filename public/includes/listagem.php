@@ -1,7 +1,44 @@
 <h1 class="mt-4 text-center">Listagem de Clientes</h1>
 
-<div class="card shadow-lg rounded">
+<div class="card shadow-sm mb-2 rounded">
     <div class="card-body">
+        <form name="Buscar" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="GET">
+            <div class="form-row">
+                <div class="col-md-6">
+                    <label for="busca">Nome ou Documento</label>
+                    <input type="search" name="busca" id="busca" class="form-control" value="<?php if (!empty($busca)) echo $busca; ?>" aria-describedby="validationServerNome" placeholder="Nome ou Documento">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="ativo">Status</label>
+                    <select name="ativo" id="ativo" class="custom-select" aria-describedby="validationServerAtivo">
+                        <option value="">Selecione...</option>
+                        <option value="SIM" <?php if (!empty($ativo) && $ativo == 'SIM') echo 'selected' ?>>SIM</option>
+                        <option value="NÃO" <?php if (!empty($ativo) && $ativo == 'NÃO') echo 'selected' ?>>NÃO</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end mt-3">
+                    <button type="submit" class="btn btn-dark">
+                        <span class="load spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Buscar
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-lg p-3 rounded">
+    <div class="card-body">
+        <?php if ($session->has('message')) : ?>
+            <div class="alert alert-<?php if ($session->has('type')) echo $session->get('type') ?> alert-dismissible fade show" role="alert">
+                <?= $session->get('message') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
         <table class="table table-responsive">
             <thead>
                 <tr>
@@ -30,8 +67,8 @@
                             <td><?= $cliente->telefone ?></td>
                             <td><?= $cliente->email ?></td>
                             <td class="text-center"><?= $cliente->ativo ?></td>
-                            <td class="text-nowrap"><?= date('d/m/Y H:i:s', strtotime($cliente->criado_em)) ?></td>
-                            <td class="text-nowrap"><?= date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) ?></td>
+                            <td class="text-nowrap"><?= (!empty($cliente->criado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->criado_em)) : '' ?></td>
+                            <td class="text-nowrap"><?= (!empty($cliente->atualizado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) : '' ?></td>
                             <td>
                                 <nobr>
                                     <button type="button" class="btn btn-default shadow" title="Detalhes do cliente" data-toggle="modal" data-target="#modal-details-<?= $cliente->id ?>">
@@ -65,6 +102,7 @@
                                                     <div class="justify-content-end">
                                                         <form action="/excluir.php" method="POST">
                                                             <input type="hidden" name="id" value="<?= $cliente->id ?>">
+                                                            <input type="hidden" name="excluir" value="true">
                                                             <button type="button" class="btn btn-danger" data-dismiss="modal">
                                                                 Cancelar </button>
                                                             <button type="submit" class="btn btn-outline-success ml-2">
@@ -110,10 +148,10 @@
                                                             <tr>
                                                                 <th class="text-wrap">Endereço</th>
                                                                 <td>
-                                                                    <?= $cliente->endereco ?>, 
+                                                                    <?= $cliente->endereco ?>,
                                                                     <?= $cliente->bairro ?> <br>
-                                                                    <?= $cliente->cidade ?> - 
-                                                                    <?= $cliente->uf ?> - 
+                                                                    <?= $cliente->cidade ?> -
+                                                                    <?= $cliente->uf ?> -
                                                                     <?= $cliente->cep ?>
                                                                 </td>
                                                             </tr>
@@ -123,11 +161,11 @@
                                                             </tr>
                                                             <tr>
                                                                 <th>Data cadastrado</th>
-                                                                <td><?= date('d/m/Y H:i:s', strtotime($cliente->criado_em)) ?></td>
+                                                                <td><?= (!empty($cliente->criado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->criado_em)) : '' ?></td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Data atualizado</th>
-                                                                <td><?= date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) ?></td>
+                                                                <td><?= (!empty($cliente->atualizado_em)) ? date('d/m/Y H:i:s', strtotime($cliente->atualizado_em)) : '' ?></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -153,4 +191,19 @@
             </tbody>
         </table>
     </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <?php
+            unset($_GET['pagina']);
+            $gets = http_build_query($_GET);
+
+            $paginas = $obPaginacao->getPages();
+            foreach ($paginas as $pagina) :
+                $paginaAtual = $pagina['current'] == true ? 'active' : '';
+            ?>
+                <li class="page-item <?= $paginaAtual ?>"><a class="page-link" href="?pagina=<?= $pagina['page'] . '&' . $gets ?>"><?= $pagina['page'] ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
 </div>

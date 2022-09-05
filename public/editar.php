@@ -3,7 +3,7 @@ session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
-define('TITLE', 'Cadastrar Cliente');
+define('TITLE', 'Editar Cliente');
 
 use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
@@ -11,6 +11,27 @@ use App\Helpers\Validate;
 
 $session = new FlashMessage();
 $validate = new Validate();
+
+/** Validação de $id identificador único de cliente */
+if (!isset($_REQUEST['id']) or !is_numeric($_REQUEST['id'])) {
+    $session->flash('message', 'ID do cliente inválido.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
+    exit;
+}
+
+/** Consultar CLiente */
+$obCliente = Cliente::getCliente($_REQUEST['id']);
+
+/** Validação se Cliente existe */
+if (!$obCliente instanceof Cliente) {
+    $session->flash('message', 'Cliente não encontrado.');
+    $session->flash('type', 'danger');
+
+    header('Location: /');
+    exit;
+}
 
 if (isset($_POST['nome'], $_POST['documento'])) {
 
@@ -32,6 +53,7 @@ if (isset($_POST['nome'], $_POST['documento'])) {
         ]);
     }
 
+    /** Carrega dados dos inputs antigos do formulário */
     for ($i = 0; $i < count($validate->fields); $i++) {
         if (array_keys($validate->fields[$i])[0] == 'nome') {
             $nome_old = $validate->fields[$i]['nome'];
@@ -67,14 +89,21 @@ if (isset($_POST['nome'], $_POST['documento'])) {
 
     if (count($validate->errors()) == 0) {
 
+        /** Condições SQL */
+        $condicoes = [
+            'documento = ' . $_POST['documento'],
+            'id != ' . $_POST['id'],
+        ];
+
+        $condicoes = array_filter($condicoes);
+
         /** Cláusula WHERE */
-        $where = 'documento = ' . $_POST['documento'];
+        $where = implode(' AND ', $condicoes);
 
         /** Consultar se documento do cliente já existe */
-        $cliente = Cliente::getClientes(null, $where);
+        $documentoCliente = Cliente::getClientes(null, $where);
 
-        if (count($cliente) == 0) {
-            $obCliente = new Cliente;
+        if (count($documentoCliente) == 0) {
             $obCliente->nome = $_POST['nome'];
             $obCliente->documento = $_POST['documento'];
             $obCliente->cep = $_POST['cep'];
@@ -86,19 +115,18 @@ if (isset($_POST['nome'], $_POST['documento'])) {
             $obCliente->email = $_POST['email'];
             $obCliente->ativo = $_POST['ativo'];
 
-            if ($obCliente->cadastrar()) {
-                $session->flash('message', 'Cliente cadastrado com sucesso.');
+            if ($obCliente->atualizar()) {
+                $session->flash('message', 'Cliente atualizado com sucesso.');
                 $session->flash('type', 'success');
 
                 header('Location: /');
                 exit;
             }
 
-            $session->flash('message', 'Erro ao cadastrar cliente.');
+            $session->flash('message', 'Erro ao atualizar cliente.');
             $session->flash('type', 'danger');
         } else {
-            $session->flash('message', 'O documento já está sendo utilizado por <strong>' . $cliente[0]->nome) . '</strong>';
-
+            $session->flash('message', 'O documento já está sendo utilizado por <strong>' . $documentoCliente[0]->nome) . '</strong>';
             $session->flash('type', 'danger');
         }
     }
