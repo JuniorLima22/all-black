@@ -6,7 +6,7 @@
             <div class="form-row">
                 <div class="col-md-6">
                     <label for="busca">Nome ou Documento</label>
-                    <input type="search" name="busca" id="busca" class="form-control" value="<?php if(!empty($busca)) echo $busca; ?>" aria-describedby="validationServerNome" placeholder="Nome ou Documento" autofocus>
+                    <input type="search" name="busca" id="busca" class="form-control" value="<?php if (!empty($busca)) echo $busca; ?>" aria-describedby="validationServerNome" placeholder="Nome ou Documento">
                 </div>
 
                 <div class="col-md-4">
@@ -191,4 +191,19 @@
             </tbody>
         </table>
     </div>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <?php
+            unset($_GET['pagina']);
+            $gets = http_build_query($_GET);
+
+            $paginas = $obPaginacao->getPages();
+            foreach ($paginas as $pagina) :
+                $paginaAtual = $pagina['current'] == true ? 'active' : '';
+            ?>
+                <li class="page-item <?= $paginaAtual ?>"><a class="page-link" href="?pagina=<?= $pagina['page'] . '&' . $gets ?>"><?= $pagina['page'] ?></a></li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
 </div>

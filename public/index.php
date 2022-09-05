@@ -5,6 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use App\Helpers\FlashMessage;
 use App\Entity\Cliente;
+use App\Db\Pagination;
 
 $session = new FlashMessage();
 
@@ -27,7 +28,14 @@ $condicoes = array_filter($condicoes);
 $where = implode(' AND ', $condicoes);
 $where .= strlen($busca) ? ' OR documento LIKE "%' . str_replace(' ', '%', $busca) . '%"' : null;
 
-$clientes = Cliente::getClientes(null, $where);
+/** Quantidade total de clientes */
+$quantidadeClientes = Cliente::getQuantidadeClientes($where);
+
+$pagina = $_GET['pagina'] ?? 1;
+
+$obPaginacao = new Pagination($quantidadeClientes, $pagina, 50);
+
+$clientes = Cliente::getClientes(null, $where, null, $obPaginacao->getLimit());
 
 include __DIR__ . '/includes/header.php';
 include __DIR__ . '/includes/listagem.php';
